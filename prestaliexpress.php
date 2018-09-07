@@ -24,7 +24,11 @@ class prestaliexpress extends Module
 
     $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
 
-    if (!Configuration::get('MYMODULE_NAME'))
+    if (!Configuration::get('MYMODULE_NAME') ||
+        !Configuration::get('ALI_API_KEY') ||
+        !Configuration::get('ALI_TRACKING_ID') ||
+        !Configuration::get('ALI_DIGITAL_SIGNATURE')
+    )
       $this->warning = $this->l('No name provided');
   }
 
@@ -36,13 +40,12 @@ class prestaliexpress extends Module
     if (!parent::install() ||
       !$this->registerHook('leftColumn') ||
       !$this->registerHook('header') ||
-      !Configuration::updateValue('MYMODULE_NAME', 'my friend')
+      !Configuration::updateValue('MYMODULE_NAME', 'my friend') ||
+      !Configuration::updateValue('ALI_API_KEY', 'please enter your api key') ||
+      !Configuration::updateValue('ALI_TRACKING_ID', 'please enter your tracking id') ||
+      !Configuration::updateValue('ALI_DIGITAL_SIGNATURE', 'please enter your digital signature')
     )
       return false;
-
-      Configuration::updateValue('ALI_API_KEY', 'please enter your api key');
-      Configuration::updateValue('ALI_TRACKING_ID', 'please enter your tracking id');
-      Configuration::updateValue('ALI_DIGITAL_SIGNATURE', 'please enter your digital signature');
 
     return true;
   }
@@ -53,7 +56,7 @@ class prestaliexpress extends Module
       !Configuration::deleteByName('MYMODULE_NAME') ||
       !Configuration::deleteByName('ALI_API_KEY') ||
       !Configuration::deleteByName('ALI_TRACKING_ID') ||
-      !Configuration::deleteByName('ALI_DIGITAL_SIGNATURE') ||
+      !Configuration::deleteByName('ALI_DIGITAL_SIGNATURE')
     )
       return false;
 
@@ -107,30 +110,24 @@ class prestaliexpress extends Module
                   'name' => 'MYMODULE_NAME',
                   'size' => 20,
                   'required' => true
-              )
-          ),
-          'input' => array(
+              ),
               array(
                   'type' => 'text',
-                  'label' => $this->l('Configuration value'),
+                  'label' => $this->l('API KEY'),
                   'name' => 'ALI_API_KEY',
                   'size' => 20,
                   'required' => true
-              )
-          ),
-          'input' => array(
+              ),
               array(
                   'type' => 'text',
-                  'label' => $this->l('Configuration value'),
+                  'label' => $this->l('TRACKING ID'),
                   'name' => 'ALI_TRACKING_ID',
                   'size' => 20,
                   'required' => true
-              )
-          ),
-          'input' => array(
+              ),
               array(
                   'type' => 'text',
-                  'label' => $this->l('Configuration value'),
+                  'label' => $this->l('DIGITAL SIGNATURE'),
                   'name' => 'ALI_DIGITAL_SIGNATURE',
                   'size' => 20,
                   'required' => true
@@ -174,6 +171,9 @@ class prestaliexpress extends Module
 
       // Load current value
       $helper->fields_value['MYMODULE_NAME'] = Configuration::get('MYMODULE_NAME');
+      $helper->fields_value['ALI_API_KEY'] = Configuration::get('ALI_API_KEY');
+      $helper->fields_value['ALI_TRACKING_ID'] = Configuration::get('ALI_TRACKING_ID');
+      $helper->fields_value['ALI_DIGITAL_SIGNATURE'] = Configuration::get('ALI_DIGITAL_SIGNATURE');
 
       return $helper->generateForm($fields_form);
   }
