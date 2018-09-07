@@ -20,7 +20,7 @@ class prestaliexpress extends Module
     parent::__construct();
 
     $this->displayName = $this->l('Ali Express Dropshipping');
-    $this->description = $this->l('A Module for Ali Express Dropshipping.');
+    $this->description = $this->l('Adds a search by id on AliExpress for Dropshipping.');
 
     $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
 
