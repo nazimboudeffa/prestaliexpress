@@ -1,0 +1,14 @@
+{
+  "name": "prestaliexpress",
+  "type": "prestashop-module",
+  "authors": [
+    {
+      "name": "Nazim Boudeffa",
+      "email": "boudeffa@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "clchangnet/aliexapi": "~1.0"
+  }
+}
